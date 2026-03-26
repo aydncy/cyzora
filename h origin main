@@ -1,0 +1,47 @@
+[33mcommit 236126a95f0799caf6146dffb5b01b747c4affed[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Aydin <aydin@example.com>
+Date:   Thu Mar 26 06:06:21 2026 +0300
+
+    remove env backup (security)
+
+[33mcommit 8a4aef15cc7b3cabe38af3c3aae8225c63736dd8[m
+Author: Aydin <aydin@example.com>
+Date:   Thu Mar 26 05:53:27 2026 +0300
+
+    � PRODUCTION READY: upgrade flow + api usage + lemon webhook
+
+[33mcommit 8eb12b1e88165a2b83f1a47ae07fdd11cc320112[m
+Author: Aydin <aydin@example.com>
+Date:   Thu Mar 26 05:51:47 2026 +0300
+
+    ✅ UPGRADE FLOW + API ENDPOINTS + WEBHOOK READY
+
+[33mcommit 82defd2e09c2d22775d0d92cb31cb823a327b5c4[m
+Author: Aydin <aydin@example.com>
+Date:   Wed Mar 25 17:38:34 2026 +0300
+
+    WORKING VERSION - DO NOT TOUCH
+
+[33mcommit 4e9c17cff021be03deeba469335b216ea3edfc9a[m
+Author: Aydin <aydin@example.com>
+Date:   Wed Mar 25 17:21:32 2026 +0300
+
+    STABLE WORKING PAGE - DO NOT TOUCH
+
+[33mcommit a0d8429e47b4e9d9e0d9ae7491b5142ce5732907[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Aydin <aydin@example.com>
+Date:   Tue Mar 24 06:23:13 2026 +0300
+
+    Update gitignore - ignore all local tools
+
+[33mcommit 6d2bd8d4faacb984a325d15828ac661f08023dc5[m
+Author: Aydin <aydin@example.com>
+Date:   Mon Mar 23 15:35:24 2026 +0300
+
+    Add README
+
+[33mcommit 561144465614fdba2723e3ac0dd59f169434df79[m[33m ([m[1;31morigin/clean-ovwi[m[33m, [m[1;32mclean-ovwi[m[33m)[m
+Author: Aydin <aydin@example.com>
+Date:   Mon Mar 23 15:28:23 2026 +0300
+
+    OVWI - Clean production code only
