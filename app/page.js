@@ -3,42 +3,53 @@ import Link from "next/link"
 import { useState } from "react"
 
 export default function Page() {
-  const [apiKey, setApiKey] = useState("ovwi_live_onjneyjiwh")
-  const [result, setResult] = useState(null)
-
-  const handleVerify = async () => {
-    const res = await fetch("/api/verify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ key: apiKey })
-    })
-    const data = await res.json()
-    setResult(data)
-  }
+  const [apiKey, setApiKey] = useState("")
 
   return (
-    <div style={{ padding: 40, maxWidth: 900, margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
-      <h1>OVWI</h1>
-      <p>Verification, usage tracking, plan limits, monthly reset.</p>
+    <div style={{padding:40,maxWidth:1000,margin:"0 auto"}}>
 
-      <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
+      <h1 style={{fontSize:48,fontWeight:800,lineHeight:1.1}}>
+        Stop debugging.<br/>
+        <span style={{color:"#3b82f6"}}>Start verifying.</span>
+      </h1>
+
+      <p style={{opacity:.7,marginTop:10}}>
+        Verify webhooks instantly with usage tracking and zero setup.
+      </p>
+
+      <div style={{marginTop:30,display:"flex",gap:10}}>
         <input
+          className="input"
+          placeholder="Enter API key"
           value={apiKey}
-          onChange={(e) => setApiKey(e.target.value)}
-          style={{ padding: 12, width: 360, border: "1px solid #ccc", borderRadius: 8 }}
-          placeholder="ovwi_live_..."
+          onChange={(e)=>setApiKey(e.target.value)}
+          style={{flex:1}}
         />
-        <button onClick={handleVerify} style={{ padding: "12px 16px" }}>Verify</button>
-        <Link href="/dashboard" style={{ padding: "12px 16px", border: "1px solid #ccc", borderRadius: 8, textDecoration: "none" }}>
-          Dashboard
+
+        <Link href="/dashboard">
+          <button className="button">Dashboard</button>
         </Link>
       </div>
 
-      <pre style={{ marginTop: 24, padding: 16, background: "#111", color: "#0f0", borderRadius: 12 }}>
-{JSON.stringify(result, null, 2)}
-      </pre>
+      <div style={{marginTop:60,display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:20}}>
+
+        <div className="card">
+          <h3>Real-time</h3>
+          <p style={{opacity:.6}}>Instant verification responses</p>
+        </div>
+
+        <div className="card">
+          <h3>Usage tracking</h3>
+          <p style={{opacity:.6}}>Track every request</p>
+        </div>
+
+        <div className="card">
+          <h3>Zero setup</h3>
+          <p style={{opacity:.6}}>Works instantly</p>
+        </div>
+
+      </div>
+
     </div>
   )
 }

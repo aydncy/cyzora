@@ -1,48 +1,31 @@
-@import "tailwindcss";
-
-:root {
-  --bg: #020617;
-}
-
 body {
-  background: var(--bg);
-  color: white;
+  margin: 0;
+  background: radial-gradient(circle at 20% 20%, #0f172a, #020617);
+  color: #e2e8f0;
+  font-family: system-ui, -apple-system;
 }
 
-/* CUSTOM CLASSES (TAILWIND APPLY YOK) */
+.card {
+  background: rgba(15,23,42,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+}
 
-.btn {
+.button {
+  background: linear-gradient(135deg,#3b82f6,#6366f1);
+  border: none;
   padding: 10px 16px;
-  border-radius: 8px;
-  transition: 0.2s;
-}
-
-.btn-primary {
-  background: linear-gradient(to right, #3b82f6, #06b6d4);
+  border-radius: 10px;
   color: white;
+  cursor: pointer;
 }
 
-.btn-secondary {
-  border: 1px solid rgba(255,255,255,0.1);
-  color: white;
-}
-
-.gradient-text {
-  background: linear-gradient(to right, #60a5fa, #22d3ee);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.badge {
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
+.input {
+  background:#020617;
+  border:1px solid #1e293b;
+  padding:10px;
+  color:white;
+  border-radius:8px;
 }
