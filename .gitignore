@@ -24,3 +24,6 @@ backups/
 *.env*
 backups/env*
 # app folder included
+
+.vercel
+.env*.local
