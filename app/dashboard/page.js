@@ -1,87 +1,109 @@
-'use client';
-import { useState } from 'react';
+"use client"
+
+import { useState } from "react"
 
 export default function DashboardPage() {
-  const [copied, setCopied] = useState(false);
-  const apiKey = 'ovwi_live_abc123def456';
+  const [email, setEmail] = useState("aydinceylan07@gmail.com")
+  const [loading, setLoading] = useState(false)
+  const [summary, setSummary] = useState(null)
+  const [items, setItems] = useState([])
+  const [createResult, setCreateResult] = useState(null)
 
-  const handleCopyKey = () => {
-    navigator.clipboard.writeText(apiKey);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const loadDashboard = async () => {
+    setLoading(true)
+    setCreateResult(null)
+    try {
+      const res = await fetch(`/api/dashboard?email=${encodeURIComponent(email)}`)
+      const data = await res.json()
+      setSummary(data.summary || null)
+      setItems(data.items || [])
+    } finally {
+      setLoading(false)
+    }
+  }
 
-  const handleLogout = () => {
-    window.location.href = '/';
-  };
+  const createKey = async () => {
+    setLoading(true)
+    setCreateResult(null)
+    try {
+      const res = await fetch('/api/keys', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+      const data = await res.json()
+      setCreateResult(data)
+      await loadDashboard()
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <div className="page">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-        <div>
-          <h1>Dashboard</h1>
-          <p style={{ marginTop: '8px', color: 'rgba(148, 163, 184, 1)' }}>Welcome back!</p>
-        </div>
-        <button className="btn secondary" onClick={handleLogout}>Logout</button>
+    <div style={{ padding: 40, maxWidth: 1100, margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>
+      <h1 style={{ marginBottom: 8 }}>OVWI Dashboard</h1>
+      <p style={{ opacity: 0.7, marginTop: 0 }}>Keys, usage, plan, reset cycle</p>
+
+      <div style={{ display: 'flex', gap: 12, marginTop: 24, marginBottom: 24 }}>
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          style={{ flex: 1, padding: 12, border: '1px solid #ccc', borderRadius: 8 }}
+        />
+        <button onClick={loadDashboard} style={{ padding: '12px 16px' }} disabled={loading}>
+          {loading ? 'Loading...' : 'Load'}
+        </button>
+        <button onClick={createKey} style={{ padding: '12px 16px' }} disabled={loading}>
+          Create key
+        </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px', marginBottom: '32px' }}>
-        <div className="panel">
-          <p style={{ color: 'rgba(148, 163, 184, 1)', marginBottom: '8px' }}>Verifications This Month</p>
-          <p style={{ fontSize: '32px', fontWeight: '800', color: '#3b82f6' }}>1,234</p>
+      {summary && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, marginBottom: 24 }}>
+          <div style={{ padding: 16, border: '1px solid #ddd', borderRadius: 12 }}>
+            <div style={{ opacity: 0.6 }}>Plan</div>
+            <div style={{ fontSize: 22, fontWeight: 700 }}>{summary.plan}</div>
+          </div>
+          <div style={{ padding: 16, border: '1px solid #ddd', borderRadius: 12 }}>
+            <div style={{ opacity: 0.6 }}>Usage</div>
+            <div style={{ fontSize: 22, fontWeight: 700 }}>{summary.usage}</div>
+          </div>
+          <div style={{ padding: 16, border: '1px solid #ddd', borderRadius: 12 }}>
+            <div style={{ opacity: 0.6 }}>Limit</div>
+            <div style={{ fontSize: 22, fontWeight: 700 }}>{summary.limit}</div>
+          </div>
+          <div style={{ padding: 16, border: '1px solid #ddd', borderRadius: 12 }}>
+            <div style={{ opacity: 0.6 }}>Remaining</div>
+            <div style={{ fontSize: 22, fontWeight: 700 }}>{summary.remaining}</div>
+          </div>
+          <div style={{ padding: 16, border: '1px solid #ddd', borderRadius: 12 }}>
+            <div style={{ opacity: 0.6 }}>Keys</div>
+            <div style={{ fontSize: 22, fontWeight: 700 }}>{summary.keys}</div>
+          </div>
         </div>
-        <div className="panel">
-          <p style={{ color: 'rgba(148, 163, 184, 1)', marginBottom: '8px' }}>Success Rate</p>
-          <p style={{ fontSize: '32px', fontWeight: '800', color: '#10b981' }}>99.1%</p>
-        </div>
-        <div className="panel">
-          <p style={{ color: 'rgba(148, 163, 184, 1)', marginBottom: '8px' }}>Current Plan</p>
-          <p style={{ fontSize: '32px', fontWeight: '800', color: '#f59e0b' }}>Pro</p>
-        </div>
-      </div>
+      )}
 
-      <div className="panel accent" style={{ padding: '32px', marginBottom: '32px' }}>
-        <h2 style={{ marginBottom: '16px' }}>API Key</h2>
-        <p style={{ color: 'rgba(148, 163, 184, 1)', marginBottom: '16px' }}>Use this key to verify webhooks</p>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <input
-            type="text"
-            value={apiKey}
-            readOnly
-            style={{
-              flex: 1,
-              background: 'rgba(15, 23, 42, 0.8)',
-              border: '1px solid rgba(71, 85, 105, 0.3)',
-              borderRadius: '8px',
-              padding: '12px 16px',
-              color: '#3b82f6',
-              fontFamily: 'monospace',
-            }}
-          />
-          <button onClick={handleCopyKey} className="btn primary" style={{ padding: '12px 24px' }}>
-            {copied ? '✓ Copied' : 'Copy'}
-          </button>
-        </div>
-      </div>
+      {createResult && (
+        <pre style={{ padding: 16, background: '#111', color: '#0f0', borderRadius: 12, overflow: 'auto' }}>
+{JSON.stringify(createResult, null, 2)}
+        </pre>
+      )}
 
-      <div className="panel" style={{ padding: '32px' }}>
-        <h2 style={{ marginBottom: '16px' }}>Recent Activity</h2>
-        <div style={{ display: 'grid', gap: '12px' }}>
-          {[
-            { time: '2 hours ago', event: 'Verified webhook from Stripe', status: '✓' },
-            { time: '5 hours ago', event: 'API key created', status: '✓' },
-            { time: 'Yesterday', event: 'Plan upgraded to Pro', status: '✓' },
-          ].map((item, idx) => (
-            <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: idx < 2 ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
-              <div>
-                <p style={{ color: '#f3f6fb' }}>{item.event}</p>
-                <p style={{ fontSize: '12px', color: 'rgba(148, 163, 184, 1)', marginTop: '4px' }}>{item.time}</p>
-              </div>
-              <p style={{ color: '#10b981', fontWeight: '600' }}>{item.status}</p>
+      <div style={{ marginTop: 24 }}>
+        <h2>API Keys</h2>
+        <div style={{ display: 'grid', gap: 12 }}>
+          {items.map((item) => (
+            <div key={item.id} style={{ border: '1px solid #ddd', borderRadius: 12, padding: 16 }}>
+              <div><b>Key:</b> {item.key}</div>
+              <div><b>Plan:</b> {item.plan}</div>
+              <div><b>Monthly usage:</b> {item.monthly_usage ?? 0}</div>
+              <div><b>Created:</b> {item.created_at}</div>
+              <div><b>Reset at:</b> {item.current_period_end || '-'}</div>
             </div>
           ))}
         </div>
       </div>
     </div>
-  );
+  )
 }

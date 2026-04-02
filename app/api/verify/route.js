@@ -5,44 +5,73 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
+const PLAN_LIMITS = {
+  free: 50,
+  pro: 1000,
+  enterprise: 10000,
+  scale: 100000
+}
+
 export async function POST(req) {
-  const body = await req.json()
-  const email = body.email?.trim().toLowerCase()
+  try {
+    const { key } = await req.json()
 
-  const { data, error } = await supabase
-    .from('users')
-    .select('*')
+    if (!key) {
+      return Response.json({ error: 'No API key' }, { status: 400 })
+    }
 
-  console.log("ALL USERS:", data)
+    const { data } = await supabase
+      .from('api_keys')
+      .select('*')
+      .eq('key', key)
+      .single()
 
-  const user = data?.find(u => u.email.toLowerCase() === email)
+    if (!data) {
+      return Response.json({ error: 'Invalid key' }, { status: 401 })
+    }
 
-  if (!user) {
-    return Response.json({ error: 'User not found' }, { status: 404 })
+    const now = new Date()
+    const periodEnd = new Date(data.current_period_end || 0)
+
+    let usage = data.monthly_usage || 0
+
+    if (!data.current_period_end || now > periodEnd) {
+      const nextMonth = new Date()
+      nextMonth.setMonth(nextMonth.getMonth() + 1)
+
+      usage = 0
+
+      await supabase
+        .from('api_keys')
+        .update({
+          monthly_usage: 0,
+          current_period_start: now,
+          current_period_end: nextMonth
+        })
+        .eq('id', data.id)
+    }
+
+    const limit = PLAN_LIMITS[data.plan] || 0
+
+    if (usage >= limit) {
+      return Response.json({ error: 'Limit exceeded' }, { status: 403 })
+    }
+
+    const newUsage = usage + 1
+
+    await supabase
+      .from('api_keys')
+      .update({ monthly_usage: newUsage })
+      .eq('id', data.id)
+
+    return Response.json({
+      ok: true,
+      plan: data.plan,
+      usage: newUsage,
+      remaining: limit - newUsage
+    })
+
+  } catch (err) {
+    return Response.json({ error: err.message }, { status: 500 })
   }
-
-  const PLAN_LIMITS = {
-    free: 50,
-    pro: 1000,
-    enterprise: 10000,
-    scale: 100000
-  }
-
-  const limit = PLAN_LIMITS[user.plan] || 0
-
-  if (user.usage_count >= limit) {
-    return Response.json({ error: 'Limit exceeded' }, { status: 403 })
-  }
-
-  await supabase
-    .from('users')
-    .update({ usage_count: user.usage_count + 1 })
-    .eq('id', user.id)
-
-  return Response.json({
-    ok: true,
-    plan: user.plan,
-    usage: user.usage_count + 1,
-    limit
-  })
 }

@@ -1,0 +1,385 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top, #071b3a 0%, #020617 45%, #020617 100%);
+  color: #f8fafc;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.page-shell {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  background: rgba(2, 6, 23, 0.7);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #60a5fa, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-link {
+  color: rgba(226,232,240,0.8);
+  font-size: 14px;
+}
+
+.login-btn {
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(96,165,250,0.25);
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: white;
+  box-shadow: 0 8px 30px rgba(59,130,246,0.24);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 24px 100px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: center;
+  padding-top: 24px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(59,130,246,0.10);
+  border: 1px solid rgba(96,165,250,0.18);
+  color: #dbeafe;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+.hero-title {
+  margin: 0 0 18px 0;
+  font-size: clamp(48px, 7vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  font-weight: 850;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 45%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-copy {
+  max-width: 540px;
+  font-size: 21px;
+  line-height: 1.7;
+  color: rgba(226,232,240,0.82);
+  margin: 0 0 30px 0;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 144px;
+  height: 52px;
+  padding: 0 22px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform .18s ease, opacity .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  color: white;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  box-shadow: 0 14px 40px rgba(59,130,246,0.24);
+}
+
+.btn-secondary {
+  color: #f8fafc;
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.10);
+}
+
+.panel {
+  position: relative;
+  border-radius: 24px;
+  padding: 28px;
+  background: linear-gradient(180deg, rgba(15,23,42,0.92), rgba(2,6,23,0.92));
+  border: 1px solid rgba(96,165,250,0.18);
+  box-shadow: 0 30px 80px rgba(2,6,23,0.55);
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: rgba(226,232,240,0.82);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: white;
+  outline: none;
+}
+
+.input {
+  height: 48px;
+  padding: 0 14px;
+}
+
+.textarea {
+  min-height: 136px;
+  resize: vertical;
+  padding: 14px;
+  line-height: 1.55;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(226,232,240,0.42);
+}
+
+.panel-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.panel-actions .btn {
+  flex: 1;
+  min-width: 0;
+}
+
+.result {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(16,185,129,0.06);
+  border: 1px solid rgba(16,185,129,0.28);
+}
+
+.result-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #34d399;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.result pre {
+  margin: 0;
+  padding: 14px;
+  border-radius: 12px;
+  overflow: auto;
+  background: rgba(2,6,23,0.7);
+  color: #86efac;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.section {
+  padding-top: 110px;
+}
+
+.section-title {
+  margin: 0 0 44px 0;
+  text-align: center;
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.step {
+  text-align: center;
+  padding: 8px 12px;
+}
+
+.step-num {
+  font-size: 42px;
+  line-height: 1;
+  font-weight: 800;
+  color: #3b82f6;
+  margin-bottom: 18px;
+}
+
+.step-title {
+  margin: 0 0 10px 0;
+  font-size: 34px;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+}
+
+.step-copy {
+  margin: 0;
+  color: rgba(226,232,240,0.74);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.pricing {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.price-card {
+  padding: 28px 22px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(15,23,42,0.85), rgba(2,6,23,0.88));
+  border: 1px solid rgba(96,165,250,0.16);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+  text-align: center;
+}
+
+.price-name {
+  font-size: 28px;
+  font-weight: 750;
+  margin: 0 0 10px 0;
+}
+
+.price-limit {
+  margin: 0 0 20px 0;
+  color: rgba(226,232,240,0.62);
+  font-size: 15px;
+  min-height: 40px;
+}
+
+.price-value {
+  margin: 0 0 20px 0;
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+}
+
+.price-card .btn {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    max-width: 560px;
+  }
+
+  .steps,
+  .pricing {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .nav-inner {
+    padding: 16px 18px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .container {
+    padding: 32px 18px 72px;
+  }
+
+  .hero-copy {
+    font-size: 18px;
+  }
+
+  .steps,
+  .pricing {
+    grid-template-columns: 1fr;
+  }
+
+  .step-title {
+    font-size: 28px;
+  }
+
+  .price-name {
+    font-size: 24px;
+  }
+
+  .price-value {
+    font-size: 40px;
+  }
+}
